@@ -1,0 +1,36 @@
+pipeline{
+    agent any
+    stages{
+        stage("checkout the code from github repository")
+        {
+            steps{
+                git url: 'https://github.com/akshu20791/DevopsClassCodes'
+                echo 'checkout done'
+            }
+        }
+       
+       stage ("compile the code"){
+           steps{
+               sh "mvn package"
+               echo "packaging is done"
+       }
+       
+         
+       }
+       stage("qa by me"){
+           steps{
+               sh " mvn pmd:pmd"
+               echo "print the syntax"
+               recordIssues(tools: [pmdParser()])
+           }
+       }
+       stage("Packaging"){
+           steps{
+               echo "packaging is done"
+               echo "packing is done"
+           }
+       }
+       
+        
+    }
+}
